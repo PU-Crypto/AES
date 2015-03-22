@@ -9,8 +9,6 @@ def AddRoundKey(Key = [], Pretext = []):
         text1 = Pretext[i]
         key1 = Key[i]
         for j in range(0,4):
-                print(text1[j])
-                print(hex(key1[j]))                
                 text1[j] = hex(int(text1[j],16)^int(hex(key1[j]),16))
         Pretext[i] = text1
     for q in range(0,4):
