@@ -35,10 +35,10 @@ def KeySchedule(Cipher):
 	#Erweitere den Schluessel
     for i in range(4,40,4):
       	roundCounter = 0
-        Cipher[i] = RotWord(Cipher[i-1]])
+        Cipher[i] = RotWord(Cipher[i-1])
         Cipher[i] = SubBytes.TranslateToSBox(Cipher[i-1])
-        Cipher[i] = XorRcon(Cipher[i],Cipher[i-4]],roundCounter)
-        roundCounter++
+        Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
+        roundCounter += 1
         for j in range(i,i+4):
         	Cipher[j] = Xor(Chipher[j-1],Chipher[j-4])
 
