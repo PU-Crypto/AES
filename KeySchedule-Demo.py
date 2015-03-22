@@ -26,7 +26,7 @@ def Xor(Spalte, SpalteVor4):
 	output = list()
 	for i in range(0,4):
 		print(type(Spalte[i]))
-		output.append(hex(int(Spalte[i], 16)^int(SpalteVor4[i], 16)))#Hexadezimal
+		output.append(hex(int(str(Spalte[i]), 16)^int(str(SpalteVor4[i]), 16)))#Hexadezimal
 
 	return output
 
@@ -35,7 +35,7 @@ def Xor(Spalte, SpalteVor4):
 def KeySchedule(Cipher):
 	#Erweitere den Schluessel
     for i in range(4,41,4):
-      	roundCounter = 0
+        roundCounter = 0
         Cipher.append(RotWord(Cipher[i-1]))
         Cipher[i] = SubBytes.TranslateToSBox(Cipher[i])
         Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
