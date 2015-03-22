@@ -1,11 +1,11 @@
 from Tables import RijndaelSBox
 
 
-def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Werten.
+def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1...,f}
 	
 	Translated = list()
 	for Wert in Spalte:
-		Wert = format(Wert, '02x') # Konvertiere die Hexadezimalzahl in einen String
+		#Wert = format(int(Wert), '02x') # Konvertiere die Hexadezimalzahl in einen String
 		fd = Wert[-2] #Erste Stelle
 		sd = Wert[-1] #Zweite Stelle
 		
@@ -13,7 +13,7 @@ def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Werten.
 		sd = int(sd , 16)
 
 		output = RijndaelSBox.SBox[fd]
-		Translated.append(output[sd])
+		Translated.append(format(output[sd],'#04x'))
 	return Translated
 	
 def BlockSubBytes(Block):

@@ -16,9 +16,8 @@ def XorRcon(Spalte, SpalteVor4, RconCount):
 	#Verknepfe Schriit fuer Schritt die Sonderfaelle Xor, inklusive der RconTabelle
     output = list()
     Rcon = RijndaelRcon.Rcon[RconCount]
-    print(Spalte)
     for i in range(0,4):
-        output.append(hex(int(Spalte[i],16)^int(SpalteVor4[i], 16)^int(Rcon[i],16)))
+        output.append(hex(int(Spalte[i],16)^int(SpalteVor4[i], 16)^int(format(Rcon[i], '#04x'),16)))
 
     return output
 
@@ -26,8 +25,7 @@ def Xor(Spalte, SpalteVor4):
 	#Verknuepfe Wert fuer Wert Xor
 	output = list()
 	for i in range(0,4):
-		print(type(Spalte[i]))
-		output.append(hex(int(str(Spalte[i]), 16)^int(str(SpalteVor4[i]), 16)))#Hexadezimal
+		output.append(hex(int(Spalte[i], 16)^int(SpalteVor4[i], 16)))#Hexadezimal
 
 	return output
 
@@ -35,14 +33,20 @@ def Xor(Spalte, SpalteVor4):
 
 def KeySchedule(Cipher):
 	#Erweitere den Schluessel
+    roundCounter = 0
     for i in range(4,41,4):
-        roundCounter = 0
+        print(roundCounter)
+        print(Cipher[i-1])
         Cipher.append(RotWord(Cipher[i-1]))
+        print("Rot " + str(Cipher[i]))
         Cipher[i] = SubBytes.TranslateToSBox(Cipher[i])
+        print("SBox " + str(Cipher[i]))
         Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
+        print("XorRcon" + str(Cipher[i]))
         roundCounter += 1
         for j in range(i,i+4):
-        	Cipher.append(Xor(Cipher[j-1],Cipher[j-4]))
+            Cipher.append(Xor(Cipher[j-1],Cipher[j-4]))
+            print("j: " + str(j) + " Chipher " + str(Cipher[j]))
     return Cipher
 
 Key = list()
@@ -53,7 +57,7 @@ Key.append([0x09, 0xcf, 0x4f, 0x3c])
 
 for Spalte in Key:
     for i in range(0,4):
-        Spalte[i] = str(Spalte[i])
+        Spalte[i] = format(Spalte[i], '#04x')
 
 
 ExpandedKey = KeySchedule(Key)
