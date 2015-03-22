@@ -41,7 +41,7 @@ def KeySchedule(Cipher):
         Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
         roundCounter += 1
         for j in range(i,i+4):
-        	Cipher[j] = Xor(Cipher[j-1],Cipher[j-4])
+        	Cipher.append(Xor(Cipher[j-1],Cipher[j-4]))
     return Cipher
 
 Key = list()
