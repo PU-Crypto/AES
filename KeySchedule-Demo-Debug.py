@@ -25,7 +25,7 @@ def Xor(Spalte, SpalteVor4):
 	#Verknuepfe Wert fuer Wert Xor
 	output = list()
 	for i in range(0,4):
-		output.append(hex(int(Spalte[i], 16)^int(SpalteVor4[i], 16)))#Hexadezimal
+		output.append(format(int(Spalte[i], 16)^int(SpalteVor4[i], 16), '#04x'))#Hexadezimal
 
 	return output
 
@@ -35,7 +35,7 @@ def KeySchedule(Cipher):
 	#Erweitere den Schluessel
     roundCounter = 0
     for i in range(4,41,4):
-        print(roundCounter)
+        print("RoundC: " + str(roundCounter) + " i: " + str(i) )
         print(Cipher[i-1])
         Cipher.append(RotWord(Cipher[i-1]))
         print("Rot " + str(Cipher[i]))
@@ -44,7 +44,7 @@ def KeySchedule(Cipher):
         Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
         print("XorRcon" + str(Cipher[i]))
         roundCounter += 1
-        for j in range(i,i+4):
+        for j in range(i+1,i+4):
             Cipher.append(Xor(Cipher[j-1],Cipher[j-4]))
             print("j: " + str(j) + " Chipher " + str(Cipher[j]))
     return Cipher
@@ -61,3 +61,9 @@ for Spalte in Key:
 
 
 ExpandedKey = KeySchedule(Key)
+i=0
+for Spalte in ExpandedKey:
+    print(str(i) + " " + str(Spalte))
+    if((i%4)==0):
+        print()
+    i+=1
