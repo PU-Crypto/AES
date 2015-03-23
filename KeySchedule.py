@@ -17,7 +17,7 @@ def XorRcon(Spalte, SpalteVor4, RconCount):
     output = list()
     Rcon = RijndaelRcon.Rcon[RconCount]
     for i in range(0,4):
-        output.append(hex(int(Spalte[i],16)^int(SpalteVor4[i], 16)^int(format(Rcon[i], '#04x'),16)))
+        output.append(format(int(Spalte[i],16)^int(SpalteVor4[i], 16)^int(format(Rcon[i], '#04x'),16), '#04x'))
 
     return output
 
