@@ -1,9 +1,9 @@
 def Padding(string):
 	while(len(string)%8!=0):
-		string+='0'
+		string='0' + string 
 	return string
 
-s='drölfzigtausendzweihundertsechsundsechzig'
+s='drölfzigtausendzweihundertsechsundsechzigminusacht'
 s=s.encode('utf-8')
 list(s)
 #print(s)
