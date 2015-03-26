@@ -1,6 +1,5 @@
 from Tables import RijndaelSBox
 
-
 def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Werten.
 	
 	Translated = list()
