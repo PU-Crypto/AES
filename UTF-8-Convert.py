@@ -53,11 +53,3 @@ def UTFdeConvert(block): #Array mit jeweils acht stellen die 0 pder 1 sind
         output += wert #Haenge die einzelnen Zeichen an den Output
 
     return output
-
-Test = UTFConvert('Fuck it all, Fuck it all, don\'t give a shit anymore, I dont care what they are going to say.... I don\'t give a fuuuuuuck! öüä')
-print(Test)
-
-Test = UTFdeConvert(Test)
-print(Test)
-
-
