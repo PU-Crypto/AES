@@ -1,8 +1,7 @@
 def shiftrows(Block):		# Block ist der einzulesene Array
-	Block=[]
 	for i in range(0,4):
-		Zeile=Block[i]
-		dump[]
+		Zeile = Block[i]
+		dump = []
 		for n in range(0,i):
 			dump[0] = Zeile[1]
 			dump[1] = Zeile[2]
