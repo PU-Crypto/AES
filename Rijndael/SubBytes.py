@@ -16,7 +16,7 @@ def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings
 		Translated.append(format(output[sd],'#04x'))
 	return Translated
 	
-def BlockSubBytes(Block):
+def SubBytes(Block):
 	#Hole eine Spalte aus dem Block
 	for i in range(0,4,1):
 		Block[i] = TranslateToSBox(Block[i])

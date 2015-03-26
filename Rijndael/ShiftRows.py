@@ -1,4 +1,4 @@
-def shiftrows(Block):		# Block ist der einzulesene Array
+def ShiftRows(Block):		# Block ist der einzulesene Array
 	for i in range(0,4):
 		Zeile = Block[i]
 		dump = []
