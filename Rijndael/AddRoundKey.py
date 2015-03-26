@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 22 11:11:19 2015
-
-@author: Babbel
-"""
 def AddRoundKey(Key = [], Pretext = []):   
     for i in range(0,4):
         text1 = Pretext[i]

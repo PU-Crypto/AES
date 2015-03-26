@@ -1,5 +1,5 @@
-##Dies sind die fuer Rijndael noetigen Tabellen um berechnungen zu Beshcleunigen. Alle sind Hexadezimal kodiert
-##Um Anwendugsbeispiele fur diese Tabellen zu erhalten siehe Demo.py
+##Dies sind die fuer Rijndael noetigen Tabellen um Berechnungen zu beschleunigen. Alle sind Hexadezimal kodiert
+##Um Anwendugsbeispiele fur diese Tabellen zu erhalten siehe Demo/Demo.py
 
 #Die S-Box wird in einen mehrdimensionalen Array geladen
 class RijndaelSBox(object):
@@ -41,7 +41,7 @@ class RijndaelSBox(object):
    InvSBox.append([0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D])
 
 class RijndaelRcon(object):
-   #Die in Rijndael verwendete Rcon Tabelle
+   #Die in Rijndael verwendete Rcon Tabelle (Spaltenorientiert)
    Rcon = []
    Rcon.append([0x01, 0x00, 0x00, 0x00])
    Rcon.append([0x02, 0x00, 0x00, 0x00])
