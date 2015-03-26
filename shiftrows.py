@@ -8,3 +8,4 @@ def shiftrows(Block):		# Block ist der einzulesene Array
 			dump[2] = Zeile[3]
 			dump[3] = Zeile[0]
 		Block[i] = dump
+	return Block
