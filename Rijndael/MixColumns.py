@@ -1,5 +1,5 @@
 from Tables import MixColumnsTables
-import math 
+
 
 def LLesen(ip):
     a = str(ip)
@@ -32,7 +32,7 @@ def Multi(i,w):
     d = int(hex(ELesen(c)),16)
     return d
     
-def XOR(zblock = []):
+def MixColumns(zblock = []):
     block = zblock[0]
     block1 = zblock[1]
     block2 = zblock[2]
@@ -71,19 +71,8 @@ def XOR(zblock = []):
                 u[j] = y
     return nblock
     
-op = []
-op.append([0xd4, 0xe0, 0xb8, 0x1e])
-op.append([0xbf, 0xb4, 0x41, 0x27])
-op.append([0x5d, 0x52, 0x11, 0x98])
-op.append([0x30, 0xae, 0xf1, 0xe5])
 
-    
-r = op[0]
-s = op[1]
-t = op[2]
-u = op[3]
-a = hex(Multi(hex(r[0]),'02')^Multi(hex(s[0]),'03')^Multi(hex(t[0]),'01')^Multi(hex(u[0]),'01'))  
-print(XOR(op))
+
 
     
 

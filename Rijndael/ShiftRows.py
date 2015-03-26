@@ -1,11 +1,14 @@
 def ShiftRows(Block):		# Block ist der einzulesene Array
-	for i in range(0,4):
-		Zeile = Block[i]
-		dump = []
-		for n in range(0,i):
-			dump[0] = Zeile[1]
-			dump[1] = Zeile[2]
-			dump[2] = Zeile[3]
-			dump[3] = Zeile[0]
-		Block[i] = dump
-	return Block
+    for i in range(1,4):
+        Zeile = Block[i]
+        for n in range(0,i):
+            dump = []            
+            dump.append(Zeile[1])
+            dump.append(Zeile[2])
+            dump.append(Zeile[3])
+            dump.append(Zeile[0])
+            Zeile = dump
+        Block[i] = Zeile
+    return Block
+ 
+
