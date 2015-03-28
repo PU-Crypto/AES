@@ -1,75 +1,70 @@
 from Rijndael.Tables import MixColumnsTables
 
 
-def LLesen(ip):
-    a = str(ip)
-    fd = int(a[-2],16)
-    sd = int(a[-1],16)
-    output = MixColumnsTables.TableL[fd]
-    e = output[sd]
-    e = hex(e).split('x')[1]
-    return e
+def LLesen(leseWert): #Anhand des ersten Zeichens (fd, vertikal) und des zweiten Zeichens (sd, horizontal) wird die Logarithmustabelle ausgelesen
+    leseWert = str(leseWert)
+    fd = int(leseWert[-2],16)
+    sd = int(leseWert[-1],16)
+    dump = MixColumnsTables.TableL[fd]
+    output = dump[sd]
+    output = hex(output).split('x')[1]
+    return output
 
 
-def ELesen(ip):
-    ip = str(ip)
-    if len(ip) < 2:
-        ip = str(str(0) + ip)
-    fd = int(ip[-2],16)
-    sd = int(ip[-1],16)
-    output = MixColumnsTables.TableE[fd]
-    y = output[sd]
-    
-    return y
-    
-def Multi(i,w):   
-    a = str(LLesen(i))
-    b = str(LLesen(w))
-    c = int(a,16) + int(b,16)
-    if c > 255:
-        c = c - 255
-    c = hex(c).split('x')[1]
-    d = int(hex(ELesen(c)),16)
-    return d
-    
-def MixColumns(zblock = []):
-    block = zblock[0]
-    block1 = zblock[1]
-    block2 = zblock[2]
-    block3 = zblock[3]
-    a = hex(Multi(block[0],'02')^Multi(block1[0],'03')^Multi(block2[0],'01')^Multi(block3[0],'01'))
-    b = hex(Multi(block[1],'02')^Multi(block1[1],'03')^Multi(block2[1],'01')^Multi(block3[1],'01'))
-    c = hex(Multi(block[2],'02')^Multi(block1[2],'03')^Multi(block2[2],'01')^Multi(block3[2],'01'))
-    d = hex(Multi(block[3],'02')^Multi(block1[3],'03')^Multi(block2[3],'01')^Multi(block3[3],'01'))
-    
-    e = hex(Multi(block[0],'01')^Multi(block1[0],'02')^Multi(block2[0],'03')^Multi(block3[0],'01'))    
-    f = hex(Multi(block[1],'01')^Multi(block1[1],'02')^Multi(block2[1],'03')^Multi(block3[1],'01'))
-    g = hex(Multi(block[2],'01')^Multi(block1[2],'02')^Multi(block2[2],'03')^Multi(block3[2],'01'))
-    h = hex(Multi(block[3],'01')^Multi(block1[3],'02')^Multi(block2[3],'03')^Multi(block3[3],'01'))    
-    
-    i = hex(Multi(block[0],'01')^Multi(block1[0],'01')^Multi(block2[0],'02')^Multi(block3[0],'03'))
-    j = hex(Multi(block[1],'01')^Multi(block1[1],'01')^Multi(block2[1],'02')^Multi(block3[1],'03'))
-    k = hex(Multi(block[2],'01')^Multi(block1[2],'01')^Multi(block2[2],'02')^Multi(block3[2],'03'))
-    l = hex(Multi(block[3],'01')^Multi(block1[3],'01')^Multi(block2[3],'02')^Multi(block3[3],'03'))
+def ELesen(leseWert): #Anhand des ersten Zeichens (fd, vertikal) und des zweiten Zeichens (sd, horizontal) wird die Exponentialtabelle ausgelesen
+    leseWert = str(leseWert)
+    if len(leseWert) < 2: #wenn der lesewert nur einstellig ist, ist eine 0 davor, welche beim Auslesen beachtet werden muss.
+        leseWert = str(str(0) + leseWert)
+    fd = int(leseWert[-2],16)
+    sd = int(leseWert[-1],16)
+    dump = MixColumnsTables.TableE[fd]
+    output = dump[sd]
+    return output
 
-    m = hex(Multi(block[0],'03')^Multi(block1[0],'01')^Multi(block2[0],'01')^Multi(block3[0],'02'))
-    n = hex(Multi(block[1],'03')^Multi(block1[1],'01')^Multi(block2[1],'01')^Multi(block3[1],'02'))
-    o = hex(Multi(block[2],'03')^Multi(block1[2],'01')^Multi(block2[2],'01')^Multi(block3[2],'02'))
-    p = hex(Multi(block[3],'03')^Multi(block1[3],'01')^Multi(block2[3],'01')^Multi(block3[3],'02'))
-    nblock = []
-    nblock.append([a,b,c,d])
-    nblock.append([e,f,g,h])
-    nblock.append([i,j,k,l])
-    nblock.append([m,n,o,p])
-    for i in range(0,4):
-        u = nblock[i]
-        for j in range(0,4):
-            y = u[j]            
-            if len(y) < 4:
-                a,b = y.split('x')
-                y = str(a + 'x' + str(0) + b)
-                u[j] = y
-    return nblock
+    
+def Multi(Faktor1,Faktor2): #Fuehre die Multiplikation im Galouiskoerper aus, mit Hilfe der Vereinfachung durch eine Addition der Werte aus der Exponentialtabelle und der Logarithmustabelle durch
+    if Faktor1 =='0x00': #Wenn der Faktor 0 ist, ist das Ergebnis auch im Galouiskoerper 0 daher wird die Funktion hier beendet
+        return '0x00'
+    Faktor1 = str(LLesen(Faktor1))
+    Faktor2 = str(LLesen(Faktor2))
+    Summe = int(Faktor1,16) + int(Faktor2,16)
+    if Summe > 255:
+        Summe = Summe - 255
+    Summe = hex(Summe).split('x')[1]
+    output = int(hex(ELesen(Summe)),16)
+    return output
+    
+def MixColumns(eingabeBlock = []): #Multipliziere und Verknuepfe XOr mit einer gegebenen Matrix auf Basis des Galouiskoerpers; Rueckgabeformat: Array mit Werten: 0x..
+    Zeile = eingabeBlock[0]
+    Zeile1 = eingabeBlock[1]
+    Zeile2 = eingabeBlock[2]
+    Zeile3 = eingabeBlock[3]
+    a = format(Multi(Zeile[0],'02')^Multi(Zeile1[0],'03')^Multi(Zeile2[0],'01')^Multi(Zeile3[0],'01'), '#04x')
+    b = format(Multi(Zeile[1],'02')^Multi(Zeile1[1],'03')^Multi(Zeile2[1],'01')^Multi(Zeile3[1],'01'), '#04x')
+    c = format(Multi(Zeile[2],'02')^Multi(Zeile1[2],'03')^Multi(Zeile2[2],'01')^Multi(Zeile3[2],'01'), '#04x')
+    d = format(Multi(Zeile[3],'02')^Multi(Zeile1[3],'03')^Multi(Zeile2[3],'01')^Multi(Zeile3[3],'01'), '#04x')
+    
+    e = format(Multi(Zeile[0],'01')^Multi(Zeile1[0],'02')^Multi(Zeile2[0],'03')^Multi(Zeile3[0],'01'), '#04x')
+    f = format(Multi(Zeile[1],'01')^Multi(Zeile1[1],'02')^Multi(Zeile2[1],'03')^Multi(Zeile3[1],'01'), '#04x')
+    g = format(Multi(Zeile[2],'01')^Multi(Zeile1[2],'02')^Multi(Zeile2[2],'03')^Multi(Zeile3[2],'01'), '#04x')
+    h = format(Multi(Zeile[3],'01')^Multi(Zeile1[3],'02')^Multi(Zeile2[3],'03')^Multi(Zeile3[3],'01'), '#04x')
+    
+    i = format(Multi(Zeile[0],'01')^Multi(Zeile1[0],'01')^Multi(Zeile2[0],'02')^Multi(Zeile3[0],'03'), '#04x')
+    j = format(Multi(Zeile[1],'01')^Multi(Zeile1[1],'01')^Multi(Zeile2[1],'02')^Multi(Zeile3[1],'03'), '#04x')
+    k = format(Multi(Zeile[2],'01')^Multi(Zeile1[2],'01')^Multi(Zeile2[2],'02')^Multi(Zeile3[2],'03'), '#04x')
+    l = format(Multi(Zeile[3],'01')^Multi(Zeile1[3],'01')^Multi(Zeile2[3],'02')^Multi(Zeile3[3],'03'), '#04x')
+
+    m = format(Multi(Zeile[0],'03')^Multi(Zeile1[0],'01')^Multi(Zeile2[0],'01')^Multi(Zeile3[0],'02'), '#04x')
+    n = format(Multi(Zeile[1],'03')^Multi(Zeile1[1],'01')^Multi(Zeile2[1],'01')^Multi(Zeile3[1],'02'), '#04x')
+    o = format(Multi(Zeile[2],'03')^Multi(Zeile1[2],'01')^Multi(Zeile2[2],'01')^Multi(Zeile3[2],'02'), '#04x')
+    p = format(Multi(Zeile[3],'03')^Multi(Zeile1[3],'01')^Multi(Zeile2[3],'01')^Multi(Zeile3[3],'02'), '#04x')
+    ausgabeBlock = []
+    ausgabeBlock.append([a,b,c,d])
+    ausgabeBlock.append([e,f,g,h])
+    ausgabeBlock.append([i,j,k,l])
+    ausgabeBlock.append([m,n,o,p])
+    
+    return ausgabeBlock
     
 
 

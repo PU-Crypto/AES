@@ -1,3 +1,4 @@
+#Verschiebe die Werte in der Zeile in Abhaengigkeit des Indizes der Zeile
 def ShiftRows(Block):		# Block ist der einzulesene Array
     for i in range(1,4):
         Zeile = Block[i]

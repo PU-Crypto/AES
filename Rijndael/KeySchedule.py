@@ -13,7 +13,7 @@ def RotWord(Spalte):
     return output
 
 def XorRcon(Spalte, SpalteVor4, RconCount):
-    #Verknepfe Schritt fuer Schritt die Sonderfaelle Xor, inklusive der RconTabelle
+    #Verknuepfe Schritt fuer Schritt die Sonderfaelle(immer die erste Spalte eines RoundKeys) Xor, inklusive der RconTabelle
     output = list()
     Rcon = RijndaelRcon.Rcon[RconCount]
     for i in range(0,4):
@@ -32,7 +32,7 @@ def Xor(Spalte, SpalteVor4):
 
 
 def KeySchedule(Key):
-    #Erweitere den Schluessel
+    #Erweitere den Schluessel auf insgesamt 10 weitere von einander abhaengige Schluessel
     roundCounter = 0
     for i in range(4,41,4):
         Key.append(RotWord(Key[i-1]))

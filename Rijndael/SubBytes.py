@@ -1,7 +1,7 @@
 from Rijndael.Tables import RijndaelSBox
 
 
-def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1...,f}
+def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1,...,f}
 	
 	Translated = list()
 	for Wert in Spalte:
@@ -15,7 +15,8 @@ def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings
 		output = RijndaelSBox.SBox[fd]
 		Translated.append(format(output[sd],'#04x'))
 	return Translated
-	
+
+#Ubersetzte einen mehrdimensionalen Array, Wert fuer Wert durch Auslesen in der SBox (Tabelle) #Monoalphabetische Verschluesselung
 def SubBytes(Block):
 	#Hole eine Spalte aus dem Block
 	for i in range(0,4,1):
