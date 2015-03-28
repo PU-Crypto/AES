@@ -1,4 +1,4 @@
-from Tables import MixColumnsTables
+from Rijndael.Tables import MixColumnsTables
 
 
 def LLesen(ip):
@@ -37,25 +37,25 @@ def MixColumns(zblock = []):
     block1 = zblock[1]
     block2 = zblock[2]
     block3 = zblock[3]
-    a = hex(Multi(hex(block[0]),'02')^Multi(hex(block1[0]),'03')^Multi(hex(block2[0]),'01')^Multi(hex(block3[0]),'01'))
-    b = hex(Multi(hex(block[1]),'02')^Multi(hex(block1[1]),'03')^Multi(hex(block2[1]),'01')^Multi(hex(block3[1]),'01'))
-    c = hex(Multi(hex(block[2]),'02')^Multi(hex(block1[2]),'03')^Multi(hex(block2[2]),'01')^Multi(hex(block3[2]),'01'))
-    d = hex(Multi(hex(block[3]),'02')^Multi(hex(block1[3]),'03')^Multi(hex(block2[3]),'01')^Multi(hex(block3[3]),'01'))
+    a = hex(Multi(block[0],'02')^Multi(block1[0],'03')^Multi(block2[0],'01')^Multi(block3[0],'01'))
+    b = hex(Multi(block[1],'02')^Multi(block1[1],'03')^Multi(block2[1],'01')^Multi(block3[1],'01'))
+    c = hex(Multi(block[2],'02')^Multi(block1[2],'03')^Multi(block2[2],'01')^Multi(block3[2],'01'))
+    d = hex(Multi(block[3],'02')^Multi(block1[3],'03')^Multi(block2[3],'01')^Multi(block3[3],'01'))
     
-    e = hex(Multi(hex(block[0]),'01')^Multi(hex(block1[0]),'02')^Multi(hex(block2[0]),'03')^Multi(hex(block3[0]),'01'))    
-    f = hex(Multi(hex(block[1]),'01')^Multi(hex(block1[1]),'02')^Multi(hex(block2[1]),'03')^Multi(hex(block3[1]),'01'))
-    g = hex(Multi(hex(block[2]),'01')^Multi(hex(block1[2]),'02')^Multi(hex(block2[2]),'03')^Multi(hex(block3[2]),'01'))
-    h = hex(Multi(hex(block[3]),'01')^Multi(hex(block1[3]),'02')^Multi(hex(block2[3]),'03')^Multi(hex(block3[3]),'01'))    
+    e = hex(Multi(block[0],'01')^Multi(block1[0],'02')^Multi(block2[0],'03')^Multi(block3[0],'01'))    
+    f = hex(Multi(block[1],'01')^Multi(block1[1],'02')^Multi(block2[1],'03')^Multi(block3[1],'01'))
+    g = hex(Multi(block[2],'01')^Multi(block1[2],'02')^Multi(block2[2],'03')^Multi(block3[2],'01'))
+    h = hex(Multi(block[3],'01')^Multi(block1[3],'02')^Multi(block2[3],'03')^Multi(block3[3],'01'))    
     
-    i = hex(Multi(hex(block[0]),'01')^Multi(hex(block1[0]),'01')^Multi(hex(block2[0]),'02')^Multi(hex(block3[0]),'03'))
-    j = hex(Multi(hex(block[1]),'01')^Multi(hex(block1[1]),'01')^Multi(hex(block2[1]),'02')^Multi(hex(block3[1]),'03'))
-    k = hex(Multi(hex(block[2]),'01')^Multi(hex(block1[2]),'01')^Multi(hex(block2[2]),'02')^Multi(hex(block3[2]),'03'))
-    l = hex(Multi(hex(block[3]),'01')^Multi(hex(block1[3]),'01')^Multi(hex(block2[3]),'02')^Multi(hex(block3[3]),'03'))
+    i = hex(Multi(block[0],'01')^Multi(block1[0],'01')^Multi(block2[0],'02')^Multi(block3[0],'03'))
+    j = hex(Multi(block[1],'01')^Multi(block1[1],'01')^Multi(block2[1],'02')^Multi(block3[1],'03'))
+    k = hex(Multi(block[2],'01')^Multi(block1[2],'01')^Multi(block2[2],'02')^Multi(block3[2],'03'))
+    l = hex(Multi(block[3],'01')^Multi(block1[3],'01')^Multi(block2[3],'02')^Multi(block3[3],'03'))
 
-    m = hex(Multi(hex(block[0]),'03')^Multi(hex(block1[0]),'01')^Multi(hex(block2[0]),'01')^Multi(hex(block3[0]),'02'))
-    n = hex(Multi(hex(block[1]),'03')^Multi(hex(block1[1]),'01')^Multi(hex(block2[1]),'01')^Multi(hex(block3[1]),'02'))
-    o = hex(Multi(hex(block[2]),'03')^Multi(hex(block1[2]),'01')^Multi(hex(block2[2]),'01')^Multi(hex(block3[2]),'02'))
-    p = hex(Multi(hex(block[3]),'03')^Multi(hex(block1[3]),'01')^Multi(hex(block2[3]),'01')^Multi(hex(block3[3]),'02'))
+    m = hex(Multi(block[0],'03')^Multi(block1[0],'01')^Multi(block2[0],'01')^Multi(block3[0],'02'))
+    n = hex(Multi(block[1],'03')^Multi(block1[1],'01')^Multi(block2[1],'01')^Multi(block3[1],'02'))
+    o = hex(Multi(block[2],'03')^Multi(block1[2],'01')^Multi(block2[2],'01')^Multi(block3[2],'02'))
+    p = hex(Multi(block[3],'03')^Multi(block1[3],'01')^Multi(block2[3],'01')^Multi(block3[3],'02'))
     nblock = []
     nblock.append([a,b,c,d])
     nblock.append([e,f,g,h])

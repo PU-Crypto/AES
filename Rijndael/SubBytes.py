@@ -1,4 +1,4 @@
-from Tables import RijndaelSBox
+from Rijndael.Tables import RijndaelSBox
 
 
 def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1...,f}

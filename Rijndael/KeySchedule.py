@@ -1,6 +1,6 @@
 #KeySchedule
-import SubBytes
-from Tables import RijndaelRcon
+from Rijndael.SubBytes import *
+from Rijndael.Tables import RijndaelRcon
 import math
 
 def RotWord(Spalte):
@@ -13,7 +13,7 @@ def RotWord(Spalte):
     return output
 
 def XorRcon(Spalte, SpalteVor4, RconCount):
-    #Verknepfe Schriit fuer Schritt die Sonderfaelle Xor, inklusive der RconTabelle
+    #Verknepfe Schritt fuer Schritt die Sonderfaelle Xor, inklusive der RconTabelle
     output = list()
     Rcon = RijndaelRcon.Rcon[RconCount]
     for i in range(0,4):
@@ -31,15 +31,15 @@ def Xor(Spalte, SpalteVor4):
 
 
 
-def KeySchedule(Cipher):
+def KeySchedule(Key):
     #Erweitere den Schluessel
     roundCounter = 0
     for i in range(4,41,4):
-        Cipher.append(RotWord(Cipher[i-1]))
-        Cipher[i] = SubBytes.TranslateToSBox(Cipher[i])
-        Cipher[i] = XorRcon(Cipher[i],Cipher[i-4],roundCounter)
+        Key.append(RotWord(Key[i-1]))
+        Key[i] = TranslateToSBox(Key[i])
+        Key[i] = XorRcon(Key[i],Key[i-4],roundCounter)
         roundCounter += 1
         for j in range(i+1,i+4):
-            Cipher.append(Xor(Cipher[j-1],Cipher[j-4]))
+            Key.append(Xor(Key[j-1],Key[j-4]))
             
-    return Cipher
+    return Key
