@@ -1,5 +1,5 @@
 import math
-import UTF8_Convert as Utf8
+import Utility.UTF8_Convert as Utf8
 def CBC_Encrypt(plain, key, initvektor): #Diese Funktion erwartet einen Plaintext, der Bereits mit Utf-8 Utility vorbereitet wurde und einen Key, der eine Zahl ist und ein Initialisierungsvektor, der Dual und 8 Steelen lang ist.
 	if len(initvektor) < 8:
 		exit()
@@ -31,18 +31,3 @@ def GenRijndaelBlock(BinArray): #Generiere einen Zweidimensionalen zeilenorienti
 	return Zeilen
 
 
-plain = Utf8.UTFConvert('Ich mag Käse')
-cipher = CBC_Encrypt(plain, bin(12345678), '10101011')
-print(cipher)
-
-RijndaelBlock = GenRijndaelBlock(cipher)
-
-
-Block4x4 = list()
-for i in range(0,len(RijndaelBlock)):
-	Block4x4.append(RijndaelBlock[i])
-	if len(Block4x4) == 4:
-
-		#Call Rijndael here
-		
-		Block4x4 = list()
