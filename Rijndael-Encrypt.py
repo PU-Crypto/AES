@@ -18,6 +18,7 @@ def Rijndael(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit Hexadezim
 	cipher = list() #Der letztendlich verschluesselte Text
 	
 	
+	cipher=AddRoundKey(key, text) #Durchfuehrung der Vorrunde
 	
 	#Ausfuehrung der 9 vollstaendigen Runden
 	for i in range(4,37,4): #Erhoehe um 4 um Synchron zu den Schluesseln zu bleiben
