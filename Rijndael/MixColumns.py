@@ -66,10 +66,34 @@ def MixColumns(eingabeBlock = []): #Multipliziere und Verknuepfe XOR mit einer g
     
     return ausgabeBlock
     
-
-
-
+def DeMixColumns(eingabeBlock = []): #Multipliziere und Verknuepfe XOr mit einer gegebenen Matrix auf Basis des Galouiskoerpers, diese ist die Inverse Matrix zur Verschlüsselungsmatrix; Rueckgabeformat: Array mit Werten: 0x..
+    Zeile = eingabeBlock[0]
+    Zeile1 = eingabeBlock[1]
+    Zeile2 = eingabeBlock[2]
+    Zeile3 = eingabeBlock[3]
+    a = format(Multi(Zeile[0],'0e')^Multi(Zeile1[0],'0b')^Multi(Zeile2[0],'0d')^Multi(Zeile3[0],'09'), '#04x')
+    b = format(Multi(Zeile[1],'0e')^Multi(Zeile1[1],'0b')^Multi(Zeile2[1],'0d')^Multi(Zeile3[1],'09'), '#04x')
+    c = format(Multi(Zeile[2],'0e')^Multi(Zeile1[2],'0b')^Multi(Zeile2[2],'0d')^Multi(Zeile3[2],'09'), '#04x')
+    d = format(Multi(Zeile[3],'0e')^Multi(Zeile1[3],'0b')^Multi(Zeile2[3],'0d')^Multi(Zeile3[3],'09'), '#04x')
     
+    e = format(Multi(Zeile[0],'09')^Multi(Zeile1[0],'0e')^Multi(Zeile2[0],'0b')^Multi(Zeile3[0],'0d'), '#04x')
+    f = format(Multi(Zeile[1],'09')^Multi(Zeile1[1],'0e')^Multi(Zeile2[1],'0b')^Multi(Zeile3[1],'0d'), '#04x')
+    g = format(Multi(Zeile[2],'09')^Multi(Zeile1[2],'0e')^Multi(Zeile2[2],'0b')^Multi(Zeile3[2],'0d'), '#04x')
+    h = format(Multi(Zeile[3],'09')^Multi(Zeile1[3],'0e')^Multi(Zeile2[3],'0b')^Multi(Zeile3[3],'0d'), '#04x')
+    
+    i = format(Multi(Zeile[0],'0d')^Multi(Zeile1[0],'09')^Multi(Zeile2[0],'0e')^Multi(Zeile3[0],'0b'), '#04x')
+    j = format(Multi(Zeile[1],'0d')^Multi(Zeile1[1],'09')^Multi(Zeile2[1],'0e')^Multi(Zeile3[1],'0b'), '#04x')
+    k = format(Multi(Zeile[2],'0d')^Multi(Zeile1[2],'09')^Multi(Zeile2[2],'0e')^Multi(Zeile3[2],'0b'), '#04x')
+    l = format(Multi(Zeile[3],'0d')^Multi(Zeile1[3],'09')^Multi(Zeile2[3],'0e')^Multi(Zeile3[3],'0b'), '#04x')
 
-
-
+    m = format(Multi(Zeile[0],'0b')^Multi(Zeile1[0],'0d')^Multi(Zeile2[0],'09')^Multi(Zeile3[0],'0e'), '#04x')
+    n = format(Multi(Zeile[1],'0b')^Multi(Zeile1[1],'0d')^Multi(Zeile2[1],'09')^Multi(Zeile3[1],'0e'), '#04x')
+    o = format(Multi(Zeile[2],'0b')^Multi(Zeile1[2],'0d')^Multi(Zeile2[2],'09')^Multi(Zeile3[2],'0e'), '#04x')
+    p = format(Multi(Zeile[3],'0b')^Multi(Zeile1[3],'0d')^Multi(Zeile2[3],'09')^Multi(Zeile3[3],'0e'), '#04x')
+    ausgabeBlock = []
+    ausgabeBlock.append([a,b,c,d])
+    ausgabeBlock.append([e,f,g,h])
+    ausgabeBlock.append([i,j,k,l])
+    ausgabeBlock.append([m,n,o,p])
+    
+    return ausgabeBlock

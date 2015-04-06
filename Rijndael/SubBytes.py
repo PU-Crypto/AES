@@ -16,7 +16,7 @@ def TranslateToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings
 		Translated.append(format(output[sd],'#04x'))
 	return Translated
 
-def TranslateInvToSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1,...,f}
+def TranslateToInvSBox(Spalte): #Erhalte einen eindimensionalen Array mit 4 Strings vom Format 0xab. ab Element aus {0,1,...,f}
 	
 	Translated = list()
 	for Wert in Spalte:
