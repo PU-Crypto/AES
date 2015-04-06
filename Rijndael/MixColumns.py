@@ -13,7 +13,7 @@ def LLesen(leseWert): #Anhand des ersten Zeichens (fd, vertikal) und des zweiten
 
 def ELesen(leseWert): #Anhand des ersten Zeichens (fd, vertikal) und des zweiten Zeichens (sd, horizontal) wird die Exponentialtabelle ausgelesen
     leseWert = str(leseWert)
-    if len(leseWert) < 2: #wenn der lesewert nur einstellig ist, ist eine 0 davor, welche beim Auslesen beachtet werden muss.
+    if len(leseWert) < 2: #Wenn der lesewert nur einstellig ist, ist eine 0 davor, welche beim Auslesen beachtet werden muss.
         leseWert = str(str(0) + leseWert)
     fd = int(leseWert[-2],16)
     sd = int(leseWert[-1],16)
@@ -24,7 +24,7 @@ def ELesen(leseWert): #Anhand des ersten Zeichens (fd, vertikal) und des zweiten
     
 def Multi(Faktor1,Faktor2): #Fuehre die Multiplikation im Galouiskoerper aus, mit Hilfe der Vereinfachung durch eine Addition der Werte aus der Exponentialtabelle und der Logarithmustabelle durch
     if Faktor1 =='0x00': #Wenn der Faktor 0 ist, ist das Ergebnis auch im Galouiskoerper 0 daher wird die Funktion hier beendet
-        return '0x00'
+        return int('0x00',16)
     Faktor1 = str(LLesen(Faktor1))
     Faktor2 = str(LLesen(Faktor2))
     Summe = int(Faktor1,16) + int(Faktor2,16)
@@ -34,7 +34,7 @@ def Multi(Faktor1,Faktor2): #Fuehre die Multiplikation im Galouiskoerper aus, mi
     output = int(hex(ELesen(Summe)),16)
     return output
     
-def MixColumns(eingabeBlock = []): #Multipliziere und Verknuepfe XOr mit einer gegebenen Matrix auf Basis des Galouiskoerpers; Rueckgabeformat: Array mit Werten: 0x..
+def MixColumns(eingabeBlock = []): #Multipliziere und Verknuepfe XOR mit einer gegebenen Matrix auf Basis des Galouiskoerpers; Rueckgabeformat: Array mit Werten: 0x..
     Zeile = eingabeBlock[0]
     Zeile1 = eingabeBlock[1]
     Zeile2 = eingabeBlock[2]

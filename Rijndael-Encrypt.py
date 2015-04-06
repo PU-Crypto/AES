@@ -19,6 +19,7 @@ def Rijndael(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit Hexadezim
 	
 	
 	cipher=AddRoundKey(key, text) #Durchfuehrung der Vorrunde
+
 	
 	#Ausfuehrung der 9 vollstaendigen Runden
 	for i in range(4,37,4): #Erhoehe um 4 um Synchron zu den Schluesseln zu bleiben
@@ -53,13 +54,13 @@ key.append(['0xab', '0xf7', '0x15', '0x88'])
 key.append(['0x09', '0xcf', '0x4f', '0x3c'])
 
 ciphertext = list()
+
 key = KeySchedule(key) #Erweitere den Schluessel
+
 
 plain = UTF8.UTFConvert('Ich mag Käse')
 cipher = CBC.CBC_Encrypt(plain, bin(12345678), '10101011')
-
 RijndaelBlock = CBC.GenRijndaelBlock(cipher)
-
 
 Block4x4 = list()
 for i in range(0,len(RijndaelBlock)):
@@ -69,4 +70,5 @@ for i in range(0,len(RijndaelBlock)):
 		ciphertext.append(Rijndael(Block4x4, key)) #Uebergib den 4x4 Block an Rijndael
 		
 		Block4x4 = list()
+
 print(ciphertext)
