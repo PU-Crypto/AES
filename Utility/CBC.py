@@ -12,7 +12,7 @@ def CBC_Encrypt(plain, key, initvektor): #Diese Funktion erwartet einen Plaintex
 		Block.append(dump)
 	return Block
 
-def GenRijndaelBlock(BinArray): #Generiere einen Zweidimensionalen zeilenorientierten Array aus einem Array mit hintereinander stehenden Werten: {0,1} und Konvertiere sie zu 0x..
+def GenRijndaelBlock(BinArray): #Generiere einen zweidimensionalen zeilenorientierten Array aus einem Array mit hintereinander stehenden Werten: {0,1} und Konvertiere sie zu 0x..
 	RijndaelBlock = list()
 	#Erweitere BinArray ggf. auf eine  durch 16 teilbare Menge an Werten
 	while len(BinArray)%16 != 0:
