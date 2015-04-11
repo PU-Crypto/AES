@@ -35,7 +35,7 @@ def UTFConvert(plain): #Wandle Test in utf-8 um und erstelle CBC kompatible Bloe
 
 
 
-def UTFdeConvert(block): #Array mit jeweils acht stellen die 0 pder 1 sind
+def UTFdeConvert(block): #Array mit jeweils acht stellen die 0 oder 1 sind
     einString = ''
     for i in range(0,len(block)):
         einString += block[i]
