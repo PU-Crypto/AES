@@ -55,6 +55,7 @@ for i in range(0,len(cipher)):
 		decrypted.append(RijndaelDecrypt(Block4x4, key)) #Uebergib den 4x4 Block an Rijndael
 		
 		Block4x4 = list()
+
 #Entferne die Blocke und Forme ein Liste aus einzelnen Werten
 
 decryptedList = list()
@@ -62,8 +63,13 @@ for Block in decrypted:
 	for Zeile in Block:
 		for Wert in Zeile:
 			decryptedList.append(Wert)
-
-plain = CBC.CBC_Decrypt(decryptedList)
+#Entferne Reine 0 Bloecke
+plain = list()
+for i in range(0,len(decryptedList),):
+	if decryptedList[i] != '0x00':
+		plain.append(decryptedList[i])
 print(plain)
+plain = CBC.CBC_Decrypt(plain)
 plain=UTF8.UTFdeConvert(plain)
-#print(plain)
+print(plain)
+#print("['00000000', '10010010', '00011000', '11000011', '01000000', '00100000', '00001101', '10100001', '10000100', '00110011', '10000010', '00000000', '10010110', '00111001', '00000011', '10011000', '01100101']")

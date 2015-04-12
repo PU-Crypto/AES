@@ -60,9 +60,10 @@ key = KeySchedule(key) #Erweitere den Schluessel
 
 plain = UTF8.UTFConvert('Ich mag Käse')
 cipher = CBC.CBC_Encrypt(plain, bin(12345678), '10101011')
-RijndaelBlock = CBC.GenRijndaelBlock(cipher)
+print(cipher)
+RijndaelBlock = CBC.GenRijndaelBlock(cipher) #Forme Listen mit 4 Hexadezimalwerten
 
-Block4x4 = list()
+Block4x4 = list() #Forme 4x4 Bloecke und uebergib sie an Rijndael
 for i in range(0,len(RijndaelBlock)):
 	Block4x4.append(RijndaelBlock[i])
 	if len(Block4x4) == 4:
