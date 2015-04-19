@@ -1,18 +1,12 @@
 import Utility.UTF8_Convert as UTF8
 import Utility.CBC as CBC
+from Rijndael.CurrentKey import GetCurrentKey as GetCurrentKey
 from Rijndael.KeySchedule import KeySchedule as KeySchedule
 from Rijndael.AddRoundKey import AddRoundKey as AddRoundKey
 from Rijndael.SubBytes import SubBytes as SubBytes
 from Rijndael.ShiftRows import ShiftRows as ShiftRows
 from Rijndael.MixColumns import MixColumns as MixColumns
 
-
-
-def GetCurrentKey(runde, key): # Ermittle aus dem recht langen Key Array die aktuell noetigen Werte
-	output = list()
-	for i in range(runde,runde+4):
-		output.append(key[i])
-	return output
 
 def Rijndael(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit Hexadezimalwerten im Format 0x.. ; key ist der bereits erweiterte Key
 	cipher = list() #Der letztendlich verschluesselte Text
