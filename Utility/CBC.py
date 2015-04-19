@@ -1,6 +1,6 @@
 import math
 import Utility.UTF8_Convert as Utf8
-def CBC_Encrypt(plain, key, initvektor): #Diese Funktion erwartet einen Plaintext, der Bereits mit Utf-8 Utility vorbereitet wurde und einen Key, der eine Zahl ist und ein Initialisierungsvektor, der Dual und 8 Stellen lang ist.
+def CBC_Encrypt(plain, initvektor): #Diese Funktion erwartet einen Plaintext, der Bereits mit Utf-8 Utility vorbereitet wurde und einen Key, der eine Zahl ist und ein Initialisierungsvektor, der Dual und 8 Stellen lang ist.
 	if len(initvektor) != 8:
 		exit()
 	Block = list()

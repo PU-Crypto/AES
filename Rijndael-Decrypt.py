@@ -20,8 +20,8 @@ def RijndaelDecrypt(cipher, key): #cipher ist ein 4x4 Block(zeilenorientiert) mi
 	text = AddRoundKey(firstKey, cipher)
 	text = DeShiftRows(text)
 	text = InvSubBytes(text)
-	#Ausfuehrung der 9 vollstaendigen Runden andersherum als bei der Verschlüsellung
-
+	
+	#Ausfuehrung der 9 vollstaendigen Runden andersherum als bei der Verschlüsellung die range kommt durch GetCurrentKey zustande
 	for i in range(36, 3, -4):
 		currentKey = GetCurrentKey(i, key)
 		text = AddRoundKey(currentKey, text)
@@ -37,7 +37,7 @@ def RijndaelDecrypt(cipher, key): #cipher ist ein 4x4 Block(zeilenorientiert) mi
 
 
 
-cipher = [['0x2f', '0x07', '0xbf', '0xac'], ['0xeb', '0x48', '0x80', '0x5f'], ['0xcf', '0x4a', '0xef', '0x4a'], ['0x7b', '0xaf', '0xd3', '0xb7'], ['0xc3', '0x4d', '0x6f', '0xa4'], ['0x1b', '0xf8', '0xf2', '0x6c'], ['0x7e', '0x92', '0xf9', '0x25'], ['0x07', '0x7f', '0xfb', '0x1a']]
+cipher = [['0x2f', '0x07', '0xbf', '0xac'], ['0xeb', '0x48', '0x80', '0x5f'], ['0xcf', '0x4a', '0xef', '0x4a'], ['0x7b', '0xaf', '0xd3', '0xb7'], ['0x7a', '0xd7', '0x4c', '0xf5'], ['0x57', '0x68', '0x0a', '0xce'], ['0xaf', '0x5c', '0x81', '0xa7'], ['0xbb', '0x37', '0x98', '0x1d']]
 key = list() #Beispiel
 key.append(['0x2b', '0x7e', '0x15', '0x16'])
 key.append(['0x28', '0xae', '0xd2', '0xa6'])
@@ -56,20 +56,15 @@ for i in range(0,len(cipher)):
 		
 		Block4x4 = list()
 
-#Entferne die Blocke und Forme ein Liste aus einzelnen Werten
+#Entferne die Bloecke und forme ein Liste aus einzelnen Werten und entferne reine 0 Bloecke
 
 decryptedList = list()
 for Block in decrypted:
 	for Zeile in Block:
 		for Wert in Zeile:
-			decryptedList.append(Wert)
-#Entferne Reine 0 Bloecke
-plain = list()
-for i in range(0,len(decryptedList),):
-	if decryptedList[i] != '0x00':
-		plain.append(decryptedList[i])
-print(plain)
-plain = CBC.CBC_Decrypt(plain)
-plain=UTF8.UTFdeConvert(plain)
-print(plain)
-#print("['00000000', '10010010', '00011000', '11000011', '01000000', '00100000', '00001101', '10100001', '10000100', '00110011', '10000010', '00000000', '10010110', '00111001', '00000011', '10011000', '01100101']")
+			if Wert != '0x00':
+				decryptedList.append(Wert)
+
+plain = CBC.CBC_Decrypt(decryptedList)#Mache CBC rueckgaengig
+plain=UTF8.UTFdeConvert(plain) #Erstelle aus den Zahlen nach der UTF-Tabelle Buchstaben
+print(plain) #Gib das entschluesselte Ergebnis aus
