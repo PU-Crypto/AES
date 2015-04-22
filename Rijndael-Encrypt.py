@@ -36,7 +36,7 @@ def RijndaelRechnung(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit H
 
 def Rijndael(text,password):
 	key = KeyGen.KeyGen(password) #generiere aus dem Passwort den Key
-	ciphertext = list()
+	preciphertext = list()
 	key = KeySchedule(key) #Erweitere den Schluessel
 	plain = UTF8.UTFConvert(text)
 	cipher = CBC.CBC_Encrypt(plain, '10101011')
@@ -48,7 +48,13 @@ def Rijndael(text,password):
 		if len(Block4x4) == 4:
 			for j in range(0,4): #formt einen Xx4x4 Array in einen Xx4 Array
 				a = RijndaelRechnung(Block4x4, key)
-				ciphertext.append(a[j]) #Uebergib den 4x4 Block an Rijndael
+				preciphertext.append(a[j]) #Uebergib den 4x4 Block an Rijndael
 			
 			Block4x4 = list()
+	ciphertext = ''
+	for Zeile in preciphertext:
+		for Wert in Zeile:
+			Wert = Wert.split('x')[1]
+			ciphertext += Wert
+		
 	return ciphertext

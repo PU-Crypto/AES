@@ -1,19 +1,13 @@
 import Utility.UTF8_Convert as UTF8
 import Utility.CBC as CBC
 import Utility.KeyGen as KeyGen
+from Rijndael.CurrentKey import GetCurrentKey as GetCurrentKey
 from Rijndael.KeySchedule import KeySchedule as KeySchedule
 from Rijndael.AddRoundKey import AddRoundKey as AddRoundKey
 from Rijndael.SubBytes import SubBytes as SubBytes
 from Rijndael.ShiftRows import ShiftRows as ShiftRows
 from Rijndael.MixColumns import MixColumns as MixColumns
 
-
-
-def GetCurrentKey(runde, key): # Ermittle aus dem recht langen Key Array die aktuell noetigen Werte
-	output = list()
-	for i in range(runde,runde+4):
-		output.append(key[i])
-	return output
 
 def RijndaelRechnung(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit Hexadezimalwerten im Format 0x.. ; key ist der bereits erweiterte Key
 	cipher = list() #Der letztendlich verschluesselte Text
@@ -40,12 +34,9 @@ def RijndaelRechnung(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit H
 	#Rueckgabe des verschluesselten Textes
 	return cipher	 
 
-
-
-
 def Rijndael(text,password):
 	key = KeyGen.KeyGen(password) #generiere aus dem Passwort den Key
-	ciphertext = list()
+	preciphertext = list()
 	key = KeySchedule(key) #Erweitere den Schluessel
 	plain = UTF8.UTFConvert(text)
 	cipher = CBC.CBC_Encrypt(plain, '10101011')
@@ -57,8 +48,14 @@ def Rijndael(text,password):
 		if len(Block4x4) == 4:
 			for j in range(0,4): #formt einen Xx4x4 Array in einen Xx4 Array
 				a = RijndaelRechnung(Block4x4, key)
-				ciphertext.append(a[j]) #Uebergib den 4x4 Block an Rijndael
+				preciphertext.append(a[j]) #Uebergib den 4x4 Block an Rijndael
 			
 			Block4x4 = list()
+	ciphertext = ''
+	for Zeile in preciphertext:
+		for Wert in Zeile:
+			Wert = Wert.split('x')[1]
+			ciphertext += Wert
+		
 	return ciphertext
-print(Rijndael('das ist meine geheime Botschaft, die wirklich streng geheim ist. Niemand soll sie wissen, wirklich niemand','das ist mein passwort'))
+print(Rijndael('Henrik ist gay, jetzt mal ehrlich','das ist mein passwort'))

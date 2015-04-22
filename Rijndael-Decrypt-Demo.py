@@ -72,3 +72,6 @@ def RijndaelDecrypt(cipher,password): #Entschluessel mit Passwort und dem dem Ci
 	plain = CBC.CBC_Decrypt(decryptedList)#Mache CBC rueckgaengig
 	plain=UTF8.UTFdeConvert(plain) #Erstelle aus den Zahlen nach der UTF-Tabelle Buchstaben
 	return plain#Gib das entschluesselte Ergebnis aus
+a = 'a21cd3521371ff7e3848e2b6107793c3f0b943fc17c8c7615dfe6239c421755df20866db64b27dcd5e4fb33f6237e930'
+b = 'das ist mein passwort'
+print(RijndaelDecrypt(a,b))
