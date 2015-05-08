@@ -7,6 +7,10 @@ from Rijndael.AddRoundKey import AddRoundKey as AddRoundKey
 from Rijndael.SubBytes import SubBytes as SubBytes
 from Rijndael.ShiftRows import ShiftRows as ShiftRows
 from Rijndael.MixColumns import MixColumns as MixColumns
+from Rijndael.SubBytes import InvSubBytes as InvSubBytes
+from Rijndael.ShiftRows import DeShiftRows as DeShiftRows
+from Rijndael.MixColumns import DeMixColumns as DeMixColumns
+
 
 
 def RijndaelRechnung(text, key): #text ist ein 4x4 Block(zeilenorientiert) mit Hexadezimalwerten im Format 0x.. ; key ist der bereits erweiterte Key
@@ -58,3 +62,105 @@ def Rijndael(text,password):
 			ciphertext += Wert
 		
 	return ciphertext
+def RijndaelDecryptRechnung(cipher, key): #cipher ist ein 4x4 Block(zeilenorientiert) mit Hexadezimalwerten im Format 0x.. ; key ist der bereits erweiterte Schluessel
+	text = list() #Der letztendlich entschluesselte Text
+
+	#Die erste Runde der Entschluesselung: Die Verschluesselung Rueckwaerts angeordnet
+	firstKey = GetCurrentKey(40, key)
+	text = AddRoundKey(firstKey, cipher)
+	text = DeShiftRows(text)
+	text = InvSubBytes(text)
+	
+	#Ausfuehrung der 9 vollstaendigen Runden andersherum als bei der Verschluesellung. Die range kommt durch GetCurrentKey zustande, ebenfalls invers zur verschluesselung
+	for i in range(36, 3, -4):
+		currentKey = GetCurrentKey(i, key)
+		text = AddRoundKey(currentKey, text)
+
+		text = DeMixColumns(text)
+		text = DeShiftRows(text)
+		text = InvSubBytes(text)
+
+	text = AddRoundKey(key, text)
+
+	return text
+
+
+
+
+def RijndaelDecrypt(cipher,password): #Entschluessel mit Passwort und dem dem Cipher
+	precipher = list(cipher) #schreibt Cipher in eine Liste
+	HexArray =[]
+		
+	for i in range (0,len(precipher),2): #macht die einzelnen eintaege zu 0xAB - Eintraege
+		paar = '0x' + precipher[i] + precipher[i+1]
+		HexArray.append(paar)
+	dump = []
+	cipher = []
+	for i in range(0,len(HexArray)): #Mach den X-Array zu einem Xx4-Array
+		dump.append(HexArray[i])
+		if len(dump) == 4:
+			cipher.append(dump)
+			dump = list()
+	key = KeyGen.KeyGen(password) #generiert den Key aus dem Passwort
+	key = KeySchedule(key) #erweitert den Key
+	
+	Block4x4 = list()
+	decrypted = list()
+	for i in range(0,len(cipher)): #macht 4x4 Bloecke
+		Block4x4.append(cipher[i])
+		if len(Block4x4) == 4:
+	
+			decrypted.append(RijndaelDecryptRechnung(Block4x4, key)) #Uebergib den 4x4 Block an Rijndael
+			
+			Block4x4 = list()
+	
+	#Entferne die Bloecke und forme ein Liste aus einzelnen Werten und entferne reine 0 Bloecke
+	
+	decryptedList = list()
+	for Block in decrypted:
+		for Zeile in Block:
+			for Wert in Zeile:
+				if Wert != '0x00':
+					decryptedList.append(Wert)
+	
+	plain = CBC.CBC_Decrypt(decryptedList)#Mache CBC rueckgaengig
+	plain=UTF8.UTFdeConvert(plain) #Erstelle aus den Zahlen nach der UTF-Tabelle Buchstaben
+	return plain#Gib das entschluesselte Ergebnis aus
+
+def handleShellParam(param, default):
+
+	for cmdarg in sys.argv:
+		if(("--" + param + "=") in cmdarg):
+			return str(cmdarg.replace(("--" + param + "="), ""))
+		elif(("-" + param + "=") in cmdarg):
+			return str(cmdarg.replace(("-" + param + "="), ""))
+		elif(("--" + param) in cmdarg):
+			return str(cmdarg.replace(("--"), ""))
+		elif(("-" + param) in cmdarg):
+			return str(cmdarg.replace(("-"), ""))
+	return default
+task = handleShellParam("t", 0) 
+"""zur Bestimmung was gerade von dem Script verlangt wird, sonst exited er, wenn man verschluesseln will und natuerlich das Password fehlt
+fuer Encrypt die 1 und fuer Decrypt die 2"""   
+password = handleShellParam("p", 0)
+PlainOrCipher = handleShellParam("poc", 0)
+
+
+if task == 1:
+	if password!=0 and PlainOrCipher != 0:
+		password += 'saltibus Minnimax'
+		print(Rijndael(PlainOrCipher, password))
+		sys.exit(0)
+	if password == 0 or PlainOrCipher == 0:
+		print('bitte fuellen sie sowohl Password als auch Entschluesselungsfeld aus')
+		sys.exit(1)
+
+if task == 2:
+	if password!=0 and PlainOrCipher != 0:
+		password += 'saltibus Minnimax'
+		print(RijndaelDecrypt(PlainOrCipher, password))
+		sys.exit(0)
+	if password == 0 or PlainOrCipher == 0:
+		print('bitte fuellen sie sowohl Password als auch Verschluesselungsfeld aus')
+		sys.exit(1)
+
