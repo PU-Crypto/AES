@@ -1,11 +1,12 @@
+ # -*- coding: utf-8 -*-
 import Utility.Keccak as Keccak
 myKeccak=Keccak.Keccak()
 
 
-def KeyGen(string): 					#KeyGen macht aus einem Satz oder Passwort einen 4x4 Schlüsselarray
+def KeyGen(string): 					#KeyGen macht aus einem Satz oder Passwort einen 4x4 Schluesselarray
 	s = list(string)
 	einString =''
-	for i in range(0,len(s)): 			#Jeden Zeichen der Eingabe wird über UTF8 übersetz und dann alle Hexadecimalzahlen zu einem String vereint
+	for i in range(0,len(s)): 			#Jeden Zeichen der Eingabe wird ueber UTF8 uebersetzt und dann alle Hexadezimalzahlen zu einem String vereint
 		s[i]=ord(s[i])
 		dump = format(s[i],'#04x')
 		dump = dump.split('x')[1]
@@ -15,7 +16,7 @@ def KeyGen(string): 					#KeyGen macht aus einem Satz oder Passwort einen 4x4 Sc
 	einzelListe = list(sha3) #dies ist die Liste der einzelnen Zeichen des Hash'
 	zweierListe = []
 	
-	for n in range(0,4):     #die Einzelnen Zeichen werden als Zeichenpärchen zusammengefügt in einen 4x4 Array geschrieben
+	for n in range(0,4):     #die Einzelnen Zeichen werden als Zeichenpaerchen zusammengefuegt in einen 4x4 Array geschrieben
 		zLZeile = []
 		for i in range(0,8,2):
 			paar = '0x' + einzelListe[i] + einzelListe[i+1]

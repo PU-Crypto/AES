@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 def AddRoundKey(key, text): #Verknuepfe den Text und den Key der Runde XOR
     output = list()
     for i in range(0,4): #Erhoehe unterschiedlich von einander, um den Aufbau von Key und Text zu beachten ( Zeilen- vs. Spaltenorientiert)

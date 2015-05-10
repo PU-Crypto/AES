@@ -1,3 +1,9 @@
+ # -*- coding: utf-8 -*-
+ #Nutzung:
+ # mit -m={d,e} {Entschluesselung, Verschluesselung}
+ # mit -p=<Passwort>
+ # mit -t=Text --> Der Text darf keine Leerzeichen enthalten
+import sys
 import Utility.UTF8_Convert as UTF8
 import Utility.CBC as CBC
 import Utility.KeyGen as KeyGen
@@ -62,6 +68,7 @@ def Rijndael(text,password):
 			ciphertext += Wert
 		
 	return ciphertext
+
 def RijndaelDecryptRechnung(cipher, key): #cipher ist ein 4x4 Block(zeilenorientiert) mit Hexadezimalwerten im Format 0x.. ; key ist der bereits erweiterte Schluessel
 	text = list() #Der letztendlich entschluesselte Text
 
@@ -88,14 +95,14 @@ def RijndaelDecryptRechnung(cipher, key): #cipher ist ein 4x4 Block(zeilenorient
 
 
 def RijndaelDecrypt(cipher,password): #Entschluessel mit Passwort und dem dem Cipher
-	precipher = list(cipher) #schreibt Cipher in eine Liste
-	HexArray =[]
+	precipher = list(cipher) #Schreibt Cipher in eine Liste
+	HexArray = list()
 		
-	for i in range (0,len(precipher),2): #macht die einzelnen eintaege zu 0xAB - Eintraege
+	for i in range (0,len(precipher),2): #Macht die einzelnen Eintraege zu 0xAB - Eintraegen
 		paar = '0x' + precipher[i] + precipher[i+1]
 		HexArray.append(paar)
-	dump = []
-	cipher = []
+	dump = list()
+	cipher = list()
 	for i in range(0,len(HexArray)): #Mach den X-Array zu einem Xx4-Array
 		dump.append(HexArray[i])
 		if len(dump) == 4:
@@ -139,28 +146,29 @@ def handleShellParam(param, default):
 		elif(("-" + param) in cmdarg):
 			return str(cmdarg.replace(("-"), ""))
 	return default
-task = handleShellParam("t", 0) 
-"""zur Bestimmung was gerade von dem Script verlangt wird, sonst exited er, wenn man verschluesseln will und natuerlich das Password fehlt
-fuer Encrypt die 1 und fuer Decrypt die 2"""   
+mode = handleShellParam("m", 0) 
+#Zur Bestimmung was gerade von dem Script verlangt wird, sonst exited er, wenn man verschluesseln will und natuerlich das Password fehlt fuer Encrypt die 1 und fuer Decrypt die 2
 password = handleShellParam("p", 0)
-PlainOrCipher = handleShellParam("poc", 0)
+text = handleShellParam("t", 0)
 
 
-if task == 1:
-	if password!=0 and PlainOrCipher != 0:
-		password += 'saltibus Minnimax'
-		print(Rijndael(PlainOrCipher, password))
+if mode == 'e':
+	if password == 0 or text == 0:
+		print('Bitte fuellen sie sowohl Password als auch Entschluesselungsfeld aus')
+		sys.exit(1)
+	if password != 0 and text != 0:
+		password += 'saltibus#Minnimax'
+		print(Rijndael(text, password))
 		sys.exit(0)
-	if password == 0 or PlainOrCipher == 0:
-		print('bitte fuellen sie sowohl Password als auch Entschluesselungsfeld aus')
+
+if mode == 'd':
+	if password!=0 and text != 0:
+		password += 'saltibus#Minnimax'
+		print(RijndaelDecrypt(text, password))
+		sys.exit(0)
+	if password == 0 or text == 0:
+		print('Bitte fuellen sie sowohl Password als auch Verschluesselungsfeld aus')
 		sys.exit(1)
 
-if task == 2:
-	if password!=0 and PlainOrCipher != 0:
-		password += 'saltibus Minnimax'
-		print(RijndaelDecrypt(PlainOrCipher, password))
-		sys.exit(0)
-	if password == 0 or PlainOrCipher == 0:
-		print('bitte fuellen sie sowohl Password als auch Verschluesselungsfeld aus')
-		sys.exit(1)
-
+if mode == 0:
+	exit("Bitte geben Sie an, ob Ver- oder Entschluesselt werden soll \n Verschluesselung : 1 \n Entschluesselung : 2")

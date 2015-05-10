@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 def Padding(string,laenge): #Erweitere auf laenge Stellen mit vorangestellten 0
 	while(len(string)%laenge!=0):
 		string='0' + string 
