@@ -171,4 +171,4 @@ if mode == 'd':
 		sys.exit(1)
 
 if mode == 0:
-	exit("Bitte geben Sie an, ob Ver- oder Entschluesselt werden soll \n Verschluesselung : 1 \n Entschluesselung : 2")
+	exit("Bitte geben Sie an, ob Ver- oder Entschluesselt werden soll \n Verschluesselung : e \n Entschluesselung : d")
