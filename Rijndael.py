@@ -180,10 +180,10 @@ if mode == 'e':
 				break;
 			erfolg = False
 			loopprevent += 1
-		if loopprevent == 4:
-			e = sys.exc_info()[0]
-			print("Dieser Text konnte nicht verschluesselt werden \n" + str(e))
-			sys.exit(1)
+			if loopprevent == 4:
+				e = sys.exc_info()[0]
+				print("Dieser Text konnte nicht verschluesselt werden \n" + str(e))
+				sys.exit(1)
 		sys.exit(0)
 
 if mode == 'd':
