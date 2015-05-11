@@ -163,6 +163,8 @@ if mode == 'e':
 
 if mode == 'd':
 	if password!=0 and text != 0:
+		if len(text)%2 != 0:
+			exit("Ist es möglich, dass ein Zeichen verloren gegangen ist")
 		password += 'saltibus#Minnimax'
 		print(RijndaelDecrypt(text, password))
 		sys.exit(0)
