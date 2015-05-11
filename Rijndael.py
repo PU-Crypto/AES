@@ -165,7 +165,7 @@ def checkResult(textIn, encrypted, password): #Nimm den Eingangstext und den Ver
 
 if mode == 'e':
 	if password == 0 or text == 0:
-		print('Bitte fuellen sie sowohl Password als auch Entschluesselungsfeld aus')
+		print('Bitte fuellen Sie sowohl Password als auch Entschluesselungsfeld aus')
 		sys.exit(1)
 	if password != 0 and text != 0:
 		password += 'saltibus#Minnimax' #Salte das Passwort
@@ -175,11 +175,11 @@ if mode == 'e':
 		while(erfolg != True or loopprevent < 4): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
 			encrypted = Rijndael(text, password)
 			if checkResult(text,encrypted,password):
-				print(encrypted)
 				erfolg = True
-			else:
-				erfolg = False
-				loopprevent += 1
+				print(encrypted)
+				break;
+			erfolg = False
+			loopprevent += 1
 		if loopprevent == 4:
 			e = sys.exc_info()[0]
 			print("Dieser Text konnte nicht verschluesselt werden \n" + str(e))
