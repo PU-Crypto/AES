@@ -170,7 +170,7 @@ if mode == 'd':
 			print(RijndaelDecrypt(text, password))
 		except:
 			e = sys.exc_info()[0]
-			print "Error in run: \n" + str(e)
+			print("Error in run: \n" + str(e))
 			sys.exit(1)
 		sys.exit(0)
 	if password == 0 or text == 0:
