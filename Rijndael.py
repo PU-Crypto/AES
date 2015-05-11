@@ -172,7 +172,7 @@ if mode == 'e':
 		erfolg = False
 		while(erfolg != True): #Teste ob die Verschluesselung funktioniert hat
 			encrypted = Rijndael(text, password)
-			if checkResult:
+			if checkResult(text,encrypted,password):
 				print(encrypted)
 				erfolg = True
 			else:
