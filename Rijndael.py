@@ -169,14 +169,21 @@ if mode == 'e':
 		sys.exit(1)
 	if password != 0 and text != 0:
 		password += 'saltibus#Minnimax' #Salte das Passwort
+
+		loopprevent=0
 		erfolg = False
-		while(erfolg != True): #Teste ob die Verschluesselung funktioniert hat
+		while(erfolg != True or loopprevent < 4): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
 			encrypted = Rijndael(text, password)
 			if checkResult(text,encrypted,password):
 				print(encrypted)
 				erfolg = True
 			else:
 				erfolg = False
+				loopprevent += 1
+		if loopprevent == 4:
+			e = sys.exc_info()[0]
+			print("Dieser Text konnte nicht verschluesselt werden \n" + str(e))
+			sys.exit(1)
 		sys.exit(0)
 
 if mode == 'd':
