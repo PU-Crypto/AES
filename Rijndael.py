@@ -151,14 +151,31 @@ mode = handleShellParam("m", 0)
 password = handleShellParam("p", 0)
 text = handleShellParam("t", 0)
 
+def checkResult(textIn, encrypted, password): #Nimm den Eingangstext und den Verschlüsselten Text und versuche beide zu vergleichen
+	try:
+		decrypted = RijndaelDecrypt(encrypted, password)
+		if decrypted == textIn:
+			return True
+		else:
+			return False
+	except:
+		return False
+
+
 
 if mode == 'e':
 	if password == 0 or text == 0:
 		print('Bitte fuellen sie sowohl Password als auch Entschluesselungsfeld aus')
 		sys.exit(1)
 	if password != 0 and text != 0:
-		password += 'saltibus#Minnimax'
-		print(Rijndael(text, password))
+		password += 'saltibus#Minnimax' #Salte das Passwort
+		erfolg = False
+		while(erfolg != True): #Teste ob die Verschluesselung funktioniert hat
+			encrypted = Rijndael(text, password)
+			if checkResult:
+				print(encrypted)
+				erfolg = True
+
 		sys.exit(0)
 
 if mode == 'd':
@@ -167,7 +184,8 @@ if mode == 'd':
 	#		exit("Ist es möglich, dass ein Zeichen verloren gegangen ist")
 		password += 'saltibus#Minnimax'
 		try:
-			print(RijndaelDecrypt(text, password))
+			decrypted = RijndaelDecrypt(text, password)
+			print(decrypted)
 		except:
 			e = sys.exc_info()[0]
 			print("Error in run: \n" + str(e))
