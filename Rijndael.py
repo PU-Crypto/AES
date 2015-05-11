@@ -169,7 +169,8 @@ if mode == 'd':
 		try:
 			print(RijndaelDecrypt(text, password))
 		except:
-			print("Etwas schlug beim Entschlüsseln fehl, bitte versuchen Sie es erneut")
+			e = sys.exc_info()[0]
+			print "Error in run: \n" + str(e)
 			sys.exit(1)
 		sys.exit(0)
 	if password == 0 or text == 0:
