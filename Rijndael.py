@@ -175,7 +175,8 @@ if mode == 'e':
 			if checkResult:
 				print(encrypted)
 				erfolg = True
-
+			else:
+				erfolg = False
 		sys.exit(0)
 
 if mode == 'd':
