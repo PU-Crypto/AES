@@ -166,7 +166,11 @@ if mode == 'd':
 	#	if len(text)%2 != 0:
 	#		exit("Ist es möglich, dass ein Zeichen verloren gegangen ist")
 		password += 'saltibus#Minnimax'
-		print(RijndaelDecrypt(text, password))
+		try:
+			print(RijndaelDecrypt(text, password))
+		except:
+			print("Etwas schlug beim Entschlüsseln fehl, bitte versuchen Sie es erneut")
+			sys.exit(1)
 		sys.exit(0)
 	if password == 0 or text == 0:
 		print('Bitte fuellen sie sowohl Password als auch Verschluesselungsfeld aus')
