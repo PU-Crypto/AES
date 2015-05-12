@@ -179,9 +179,9 @@ if mode == 'e':
 		password += 'saltibus#Minnimax' #Salte das Passwort
 
 		loopprevent=0
-		while(loopprevent < 4): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
+		while(loopprevent < 3): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
 			encrypted = Rijndael(text, password)
-			if uncatchedResult(text,encrypted,password):
+			if checkResult(text,encrypted,password):
 				print(encrypted)
 				break;
 			loopprevent += 1
