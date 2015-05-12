@@ -1,7 +1,7 @@
  # -*- coding: utf-8 -*-
 import math
 import Utility.UTF8_Convert as Utf8
-def CBC_Encrypt(plain, initvektor): #Diese Funktion erwartet einen Plaintext, der Bereits mit Utf-8 Utility vorbereitet wurde und einen Key, der eine Zahl ist und ein Initialisierungsvektor, der Dual und 8 Stellen lang ist.
+def CBC_Encrypt(plain, initvektor): #Diese Funktion erwartet einen Plaintext, der Bereits mit Utf-8 Utility vorbereitet wurde und ein Initialisierungsvektor, der dual und 8 Stellen lang ist.
 	if len(initvektor) != 8:
 		exit()
 	Block = list()
@@ -28,7 +28,7 @@ def GenRijndaelBlock(BinArray): #Generiere einen zweidimensionalen zeilenorienti
 	#Erweitere BinArray ggf. auf eine  durch 16 teilbare Menge an Werten
 	while len(BinArray)%16 != 0:
 		BinArray.append('00000000')
-
+	#BinArray = CBC_Encrypt(BinArray, '10101011')
 	#Erstelle einen Array mit Zeilen von 4 Stellen und einer durch 4 teilbaren Laenge
 	Zeilen = list()
 	dump = list()

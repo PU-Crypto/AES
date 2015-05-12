@@ -24,8 +24,7 @@ def UTFConvert(plain): #Wandle Test in utf-8 um und erstelle CBC kompatible Bloe
         dump = "{0:b}".format(s[i])
         dump = Padding(dump,11)
         einString += dump
-
-
+    
     einString = Padding(einString,8) ##Ergaenze den string mit 0 bis er durch 8 teilbar ist
 
     block = SplitBlocks(einString,8) #Erstelle Bloecke mit 8 Stellen
@@ -36,17 +35,14 @@ def UTFConvert(plain): #Wandle Test in utf-8 um und erstelle CBC kompatible Bloe
 
 
 
-def UTFdeConvert(block): #Array mit jeweils acht stellen die 0 oder 1 sind
+def UTFdeConvert(liste): #Array mit jeweils acht stellen die 0 oder 1 sind
     einString = ''
-    for i in range(0,len(block)):
-        einString += block[i]
-
+    for stelle in liste:
+        if stelle != '00000000': #In GenRijndaelBlock wird erweitert, dies muss nun rueckgangig gemacht werden
+            einString += stelle
     einString = str(int(einString)) #Entferne fuehrende 0
     einString = Padding(einString,11) #Erweitere wieder auf 11er Bloecke
-    
     block = SplitBlocks(einString,11) #Trenne in 11er Bloecke
-
-
     output = ''
     for wert in block:
         wert = int(wert,2) #Erstelle aus der Dualzahl eine Dezimalzahl
