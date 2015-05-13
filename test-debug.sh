@@ -2,10 +2,10 @@
 FAILCOUNT=0
 WINCOUNT=0
 COUNTER=0
-while [  $COUNTER -lt 1000 ]; do
+while [  $COUNTER -lt 100 ]; do
 #	echo "Enter a string with no '' or ' ' "
 #	read string
-	string=$(pwgen -N 1 24)
+	string=$(pwgen -N 1 500)
 	#echo "$string"	
 	cipher=$(python3 Rijndael-Debug.py -m=e -p=Password#Very#Secure -t=$string)
 

@@ -37,8 +37,7 @@ def UTFConvert(plain): #Wandle Test in utf-8 um und erstelle CBC kompatible Bloe
 def UTFdeConvert(liste): #Array mit jeweils acht stellen die 0 oder 1 sind
     einString = ''
     for stelle in liste:
-        if stelle != '00000000': #In GenRijndaelBlock wird erweitert, dies muss nun rueckgangig gemacht werden
-            einString += stelle
+        einString += stelle
     einString = str(int(einString)) #Entferne fuehrende 0
     einString = Padding(einString,11) #Erweitere wieder auf 11er Bloecke
     block = SplitBlocks(einString,11) #Trenne in 11er Bloecke

@@ -27,7 +27,7 @@ def CBC_Decrypt(cipher): #Diese Funktion erwartet die aus Rijndael-Decrypt ausge
 def GenRijndaelBlock(BinArray): #Generiere einen zweidimensionalen zeilenorientierten Array aus einem Array mit hintereinander stehenden Werten: {0,1} und Konvertiere sie zu 0x..
 	#Erweitere BinArray ggf. auf eine  durch 16 teilbare Menge an Werten
 	while len(BinArray)%16 != 0:
-		BinArray.append('00000000')
+		BinArray.insert(0,'00000000')
 	#BinArray = CBC_Encrypt(BinArray, '10101011')
 	#Erstelle einen Array mit Zeilen von 4 Stellen und einer durch 4 teilbaren Laenge
 	Zeilen = list()
