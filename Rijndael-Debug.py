@@ -145,8 +145,8 @@ def handleShellParam(param, default):
 	return default
 
 def checkResult(textIn, encrypted, password): #Nimm den Eingangstext und den Verschlüsselten Text und versuche beide zu vergleichen
-	decrypted = RijndaelDecrypt(encrypted, password)
 	try:
+		decrypted = RijndaelDecrypt(encrypted, password)
 		if decrypted == textIn:
 			return True
 		else:
@@ -166,7 +166,7 @@ text = handleShellParam("t", 0)
 #mode='e'
 #password='StrengstensGeheim'
 #if mode=='e':
-#	text='ziveexeipeuj'
+#	text='eivaejooheepiyahshogahqu'
 #else:
 #	text='230e564c7ff6099750826e0a1b97e8c729de59d7927b3ce13d67441a2bf051f2'
 
@@ -179,7 +179,7 @@ if mode == 'e':
 		password += 'saltibus#Minnimax' #Salte das Passwort
 
 		loopprevent=0
-		while(loopprevent < 4): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
+		while(loopprevent < 3): #Teste ob die Verschluesselung funktioniert hat sollte loopprevent ausschlagen gib eine Fehlermeldung aus
 			encrypted = Rijndael(text, password)
 			if checkResult(text,encrypted,password):
 				print(encrypted)

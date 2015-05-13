@@ -24,7 +24,6 @@ def UTFConvert(plain): #Wandle Test in utf-8 um und erstelle CBC kompatible Bloe
         dump = "{0:b}".format(s[i])
         dump = Padding(dump,11)
         einString += dump
-    
     einString = Padding(einString,8) ##Ergaenze den string mit 0 bis er durch 8 teilbar ist
 
     block = SplitBlocks(einString,8) #Erstelle Bloecke mit 8 Stellen
