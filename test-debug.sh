@@ -2,17 +2,17 @@
 FAILCOUNT=0
 WINCOUNT=0
 COUNTER=0
-while [  $COUNTER -lt 100 ]; do
+while [  $COUNTER -lt 1000 ]; do
 #	echo "Enter a string with no '' or ' ' "
 #	read string
-	string=$(pwgen -N 1 12)
+	string=$(pwgen -N 1 24)
 	#echo "$string"	
-	cipher=$(python3 Rijndael.py -m=e -p=Password#Very#Secure -t=$string)
+	cipher=$(python3 Rijndael-Debug.py -m=e -p=Password#Very#Secure -t=$string)
 
 #	echo "$cipher"
 	
 	
-	text=$(python3 Rijndael.py -m=d -p=Password#Very#Secure -t=$cipher)
+	text=$(python3 Rijndael-Debug.py -m=d -p=Password#Very#Secure -t=$cipher)
 
 #	echo "$text"
 	
@@ -27,6 +27,7 @@ while [  $COUNTER -lt 100 ]; do
 	else
 		#echo "Everything was done right! Have some nice sleep"
 		let WINCOUNT=WINCOUNT+1
+		echo "$COUNTER"
 	fi
 
 	let COUNTER=COUNTER+1
