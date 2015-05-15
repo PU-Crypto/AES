@@ -12,8 +12,8 @@ Rijndael.py:
 ### Parameter:
 
 ### -m
-e == Verschlüsselung
-d == Entschlüsselung
+* e == Verschlüsselung
+* d == Entschlüsselung
 
 ### -p
 Passwort
